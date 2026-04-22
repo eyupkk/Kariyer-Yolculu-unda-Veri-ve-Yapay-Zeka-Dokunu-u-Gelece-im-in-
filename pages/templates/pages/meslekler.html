@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{% static 'pages/img/logo.png' %}">
+    <title>Meslekler Arşivi | Geleceğim İçin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand img { padding: 2px; }
+        body { background-color: #f4f7f6; }
+        .meslek-card { 
+            transition: all 0.3s ease; 
+            border: none; 
+            border-radius: 20px;
+        }
+        .meslek-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+        }
+        .category-badge { font-size: 0.7rem; text-transform: uppercase; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-0">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'pages/img/logo.png' %}" alt="Logo" width="110" height="100" class="me-4 mt-n2 mb-n2">
+        Geleceğim İçin
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'meslekler' %}">Meslekler</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'sehirler' %}">Şehirler</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary">Meslek Rehberi</h1>
+        <p class="lead text-muted">Sizin İçin Hazırlanmış Meslek Tanıtımları</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        
+        
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-info text-dark category-badge mb-2">Mühendislik</span><h6 class="fw-bold">Bilgisayar Mühendisliği</h6><a href="{% url 'pc_muh_detay' %}" class="btn btn-primary">Detayı Gör</a></div></div></div>      
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-info text-dark category-badge mb-2">Mühendislik</span><h6 class="fw-bold">Yazılım Mühendisliği</h6><a href="{% url 'yazilim_detay' %}" class="btn btn-primary">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-info text-dark category-badge mb-2">Mühendislik</span><h6 class="fw-bold">Elektrik-Elektronik</h6><a href="{% url 'elektrik_detay' %}" class="btn btn-primary">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-info text-dark category-badge mb-2">Mühendislik</span><h6 class="fw-bold">Makine Mühendisliği</h6><a href="{% url 'makine_detay' %}" class="btn btn-primary">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-info text-dark category-badge mb-2">Yönetim</span><h6 class="fw-bold">Veri Analisti</h6><a href="{% url 'veri_analisti_detay' %}" class="btn btn-primary">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-info text-dark category-badge mb-2">Yönetim</span><h6 class="fw-bold">Yönetim Bilişim Sistemleri</h6><a href="{% url 'ybs_detay' %}" class="btn btn-primary">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-info text-dark category-badge mb-2">Yönetim</span><h6 class="fw-bold">Endüstri Mühendisliği</h6><a href="{% url 'endustri_detay' %}" class="btn btn-primary">Detayı Gör</a></div></div></div>
+        
+
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-danger text-white mb-2">Sağlık</span><h6 class="fw-bold">Tıp (Doktorluk)</h6><a href="{% url 'tip_detay' %}" class="btn text-white" style="background-color: #be123c; border: none;">Detayı Gör</a></div></div></div>       
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-danger text-white mb-2">Sağlık</span><h6 class="fw-bold">Diş Hekimliği</h6><a href="{% url 'dis_detay' %}" class="btn text-white" style="background-color: #be123c; border: none;">Detayı Gör</a></div></div></div>        
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-danger text-white mb-2">Sağlık</span><h6 class="fw-bold">Hemşirelik</h6><a href="{% url 'hemsirelik_detay' %}" class="btn text-white" style="background-color: #be123c; border: none;">Detayı Gör</a></div></div></div>        
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-danger text-white mb-2">Sağlık</span><h6 class="fw-bold">Eczacılık</h6><a href="{% url 'eczacilik_detay' %}" class="btn text-white" style="background-color: #be123c; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-danger text-white mb-2">Sağlık</span><h6 class="fw-bold">Fizyoterapi</h6><a href="{% url 'ftr_detay' %}" class="btn text-white" style="background-color: #be123c; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-danger text-white mb-2">Sağlık</span><h6 class="fw-bold">Beslenme ve Diyetetik</h6><a href="{% url 'diyetisyen_detay' %}" class="btn text-white" style="background-color: #be123c; border: none;">Detayı Gör</a></div></div></div>
+
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-success text-white mb-2">Eğitim</span><h6 class="fw-bold">Okul Öncesi Öğretmenliği</h6><a href="{% url 'okul_oncesi_detay' %}" class="btn text-white" style="background-color: #198754; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-success text-white mb-2">Eğitim</span><h6 class="fw-bold">İngilizce Öğretmenliği</h6><a href="{% url 'ingilizce_detay' %}" class="btn text-white" style="background-color: #198754; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-success text-white mb-2">Sosyal</span><h6 class="fw-bold">Hukuk</h6><a href="{% url 'hukuk_detay' %}" class="btn text-white" style="background-color: #198754; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-success text-white mb-2">Sosyal Bilimler</span><h6 class="fw-bold">Psikoloji</h6><a href="{% url 'psikoloji_detay' %}" class="btn text-white" style="background-color: #198754; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-success text-white mb-2">Sosyal Bilimler</span><h6 class="fw-bold">PDR</h6><a href="{% url 'pdr_detay' %}" class="btn text-white" style="background-color: #198754; border: none;">Detayı Gör</a></div></div></div>
+
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-warning text-dark mb-2">Tasarım & Yapı</span><h6 class="fw-bold">Mimarlık</h6><a href="{% url 'mimarlik_detay' %}" class="btn text-white" style="background-color: #f59e0b; border: none;">Detayı Gör</a></div></div></div>        
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-warning text-dark mb-2">Tasarım</span><h6 class="fw-bold">İç Mimarlık</h6><a href="{% url 'ic_mimarlik_detay' %}" class="btn text-white" style="background-color: #f59e0b; border: none;">Detayı Gör</a></div></div></div> 
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-warning text-dark mb-2">Tasarım</span><h6 class="fw-bold">Grafik Tasarım</h6><a href="{% url 'grafik_tasarim_detay' %}" class="btn text-white" style="background-color: #f59e0b; border: none;">Detayı Gör</a></div></div></div> 
+
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-secondary text-white mb-2">Yönetim</span><h6 class="fw-bold">İşletme & İktisat</h6><a href="{% url 'isletme_iktisat_detay' %}" class="btn text-white" style="background-color: #6c757d; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-secondary text-white mb-2">Yönetim</span><h6 class="fw-bold">Lojistik</h6><a href="{% url 'lojistik_detay' %}" class="btn text-white" style="background-color: #6c757d; border: none;">Detayı Gör</a></div></div></div>
+        <div class="col"><div class="card h-100 shadow-sm meslek-card"><div class="card-body"><span class="badge bg-secondary text-white mb-2">Yönetim</span><h6 class="fw-bold">Uluslararası Ticaret</h6><a href="{% url 'uluslararasi_ticaret_detay' %}" class="btn text-white" style="background-color: #6c757d; border: none;">Detayı Gör</a></div></div></div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

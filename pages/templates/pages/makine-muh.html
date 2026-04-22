@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makine Mühendisliği Rehberi | Geleceğim İçin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        .navbar-custom { background-color: #1f2529; padding: 0.5rem 0; border: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; }
+        .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); background: #fff; }
+        .text-primary-custom { color: #0d6efd; }
+        .chart-container { position: relative; height: 320px; width: 100%; }
+        .skill-badge { background: #eef2ff; color: #4338ca; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0 5px 10px 0; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-0">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'pages/img/logo.png' %}" alt="Logo" width="110" height="100" class="me-4 mt-n2 mb-n2">
+        Geleceğim İçin
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'meslekler' %}">Meslekler</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Şehirler</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card card-custom p-4">
+                <h1 class="fw-bold text-primary-custom mb-3">Makine Mühendisliği</h1>
+                <p class="lead text-muted small">Hareketin ve enerjinin efendileri.</p>
+                <hr>
+                <div class="pro-text mt-4">
+                    <h5 class="fw-bold">Makine Mühendisi Nedir?</h5>
+                    <p>Mekanik sistemlerin tasarımı, analizi, üretimi ve bakımıyla ilgilenen en temel mühendislik dalıdır. Bir iğneden bir uzay aracına kadar hareket eden her sistemde imzası vardır.</p>
+                    <h5 class="mt-4 fw-bold">Teknik Beceriler</h5>
+                    <div class="mt-2">
+                        <span class="skill-badge">SolidWorks / AutoCAD</span>
+                        <span class="skill-badge">Termodinamik & Isı Transferi</span>
+                        <span class="skill-badge">ANSYS (Sonlu Elemanlar Analizi)</span>
+                        <span class="skill-badge">Robotik & Mekatronik</span>
+                    </div>
+                    <h5 class="mt-4 fw-bold">Çalışma Alanları</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent">🏎️ <strong>Otomotiv:</strong> Yeni nesil motor teknolojileri ve aerodinamik gövde tasarımı.</li>
+                        <li class="list-group-item bg-transparent">⚙️ <strong>İmalat & Savunma:</strong> İHA/SİHA mekanik altyapıları ve üretim hatları.</li>
+                        <li class="list-group-item bg-transparent">🌡️ <strong>Enerji:</strong> Termik santrallerden rüzgar türbinlerine kadar enerji dönüşümü.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-custom p-4 text-center">
+                <h6 class="fw-bold text-muted mb-4 text-uppercase">Makine Maaş Analizi</h6>
+                <div class="chart-container"><canvas id="maasGrafigi"></canvas></div>
+                <div class="mt-4 p-3 bg-light rounded-4">
+                    <small class="text-muted fw-bold">NET MAAŞ TAHMİNİ</small>
+                    <div id="secilenMaas" class="display-6 fw-bold text-success my-1" style="font-size: 1.8rem;">Sektör Seçin</div>
+                    <p id="secilenBilgi" class="small text-muted mb-0">Sektöre göre ortalama başlangıç verisi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('maasGrafigi').getContext('2d');
+    const veriler = {
+        labels: ['Havacılık', 'Savunma Sanayi', 'Otomotiv', 'Enerji', 'Mekanik Tesisat'],
+        datasets: [{
+            data: [105000, 95000, 75000, 80000, 65000], 
+            backgroundColor: ['#1e293b', '#0369a1', '#dc2626', '#16a34a', '#d97706'],
+            borderRadius: 10
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: veriler,
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    document.getElementById('secilenMaas').innerText = veriler.datasets[0].data[idx].toLocaleString('tr-TR') + " TL";
+                    document.getElementById('secilenBilgi').innerHTML = `<b>${veriler.labels[idx]}</b> sektörü ortalama uzman verisidir.`;
+                }
+            },
+            scales: {
+                x: { display: false },
+                y: { grid: { display: false }, ticks: { font: { weight: 'bold' } } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

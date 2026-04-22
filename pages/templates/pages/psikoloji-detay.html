@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psikoloji Rehberi | Geleceğim İçin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        .navbar-custom { background-color: #1f2529; padding: 0.5rem 0; border: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; }
+        .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); background: #fff; }
+        .text-primary-custom { color: #198754; } /* Yeşil Grup Tonu */
+        .chart-container { position: relative; height: 320px; width: 100%; }
+        .skill-badge { background: #f0fdf4; color: #166534; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0 5px 10px 0; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-0">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'pages/img/logo.png' %}" alt="Logo" width="110" height="100" class="me-4 mt-n2 mb-n2">
+        <span class="ms-2">Geleceğim İçin</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'meslekler' %}">Meslekler</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Şehirler</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card card-custom p-4">
+                <h1 class="fw-bold text-primary-custom mb-3">Psikoloji</h1>
+                <p class="lead text-muted small">İnsan zihninin derinliklerini keşfeden, davranış ve duyguları bilimle anlayan disiplin.</p>
+                <hr>
+                <div class="pro-text mt-4">
+                    <h5 class="fw-bold">Psikoloji Bölümü Nedir?</h5>
+                    <p>Zihinsel süreçleri ve davranışları bilimsel yöntemlerle inceleyen bir bilim dalıdır. 4 yıllık lisans eğitiminin ardından uzmanlık alanına göre Klinik Psikolog, Endüstriyel Psikolog veya Danışman unvanları alınır.</p>
+                    
+                    <h5 class="mt-4 fw-bold">Uzmanlık Alanları</h5>
+                    <div class="mt-2">
+                        <span class="skill-badge">Klinik Psikoloji</span>
+                        <span class="skill-badge">Sosyal Psikoloji</span>
+                        <span class="skill-badge">Gelişim Psikolojisi</span>
+                        <span class="skill-badge">Bilişsel Psikoloji</span>
+                        <span class="skill-badge">Endüstri ve Örgüt Psikolojisi</span>
+                    </div>
+
+                    <h5 class="mt-4 fw-bold">Çalışma Alanları</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent">🛋️ <strong>Klinik & Danışmanlık:</strong> Özel kliniklerde veya hastanelerde terapi ve danışmanlık hizmeti.</li>
+                        <li class="list-group-item bg-transparent">🏢 <strong>İnsan Kaynakları (İK):</strong> Şirketlerde çalışan seçimi, eğitimi ve kurumsal gelişim süreçleri.</li>
+                        <li class="list-group-item bg-transparent">🏫 <strong>Eğitim Kurumları:</strong> Okullarda ve rehabilitasyon merkezlerinde öğrenci ve aile desteği.</li>
+                        <li class="list-group-item bg-transparent">🚔 <strong>Adli & Emniyet:</strong> Cezaevlerinde veya mahkemelerde bilirkişilik ve rehabilitasyon.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-custom p-4 text-center">
+                <h6 class="fw-bold text-muted mb-4 text-uppercase" style="letter-spacing: 1px;">Psikoloji Sektörü Kazanç Analizi</h6>
+                <div class="chart-container">
+                    <canvas id="maasGrafigi"></canvas>
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded-4">
+                    <small class="text-muted fw-bold">NET KAZANÇ TAHMİNİ</small>
+                    <div id="secilenMaas" class="display-6 fw-bold text-success my-1" style="font-size: 1.8rem;">Sektör Seçin</div>
+                    <p id="secilenBilgi" class="small text-muted mb-0">Seans ücreti, kurum tipi ve uzmanlığa göre verilerdir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('maasGrafigi').getContext('2d');
+    const veriler = {
+        labels: ['Rehabilitasyon Merkz.', 'Kamu (Hastane)', 'Kurumsal İK Uzmanı', 'Özel Klinik (Bağlı)', 'Bireysel Terapi (Online/Yüz Yüze)'],
+        datasets: [{
+            data: [38000, 54000, 62000, 45000, 115000], 
+            aciklamalar: [
+                'Özel eğitim ve rehabilitasyon merkezlerinde başlangıç maaşı.',
+                'Devlet hastanelerinde kadrolu psikolog maaşı.',
+                'Şirketlerin İK departmanlarında uzman seviyesinde kazanç.',
+                'Bir kliniğe bağlı seans başı ücretle çalışan psikolog geliri.',
+                'Kendi danışanları olan ve aktif seans yapan uzman net kârı.'
+            ],
+            backgroundColor: ['#dcfce7', '#86efac', '#4ade80', '#22c55e', '#16a34a'],
+            borderRadius: 10
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: veriler,
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    document.getElementById('secilenMaas').innerText = veriler.datasets[0].data[idx].toLocaleString('tr-TR') + " TL+";
+                    document.getElementById('secilenBilgi').innerHTML = `<b>${veriler.labels[idx]}:</b> ${veriler.datasets[0].aciklamalar[idx]}`;
+                }
+            },
+            scales: {
+                x: { display: false },
+                y: { grid: { display: false }, ticks: { font: { weight: 'bold' } } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İç Mimarlık Rehberi | Geleceğim İçin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        .navbar-custom { background-color: #1f2529; padding: 0.5rem 0; border: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; }
+        .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); background: #fff; }
+        .text-primary-custom { color: #d97706; } /* Tasarım Grubu Sarı Tonu */
+        .chart-container { position: relative; height: 320px; width: 100%; }
+        .skill-badge { background: #fffbeb; color: #92400e; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0 5px 10px 0; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-0">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'pages/img/logo.png' %}" alt="Logo" width="110" height="100" class="me-4 mt-n2 mb-n2">
+        <span class="ms-2">Geleceğim İçin</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'meslekler' %}">Meslekler</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Şehirler</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card card-custom p-4">
+                <h1 class="fw-bold text-primary-custom mb-3">İç Mimarlık ve Çevre Tasarımı</h1>
+                <p class="lead text-muted small">İç mekanları işlevsel, estetik ve yaşanabilir sanat eserlerine dönüştüren disiplin.</p>
+                <hr>
+                <div class="pro-text mt-4">
+                    <h5 class="fw-bold">İç Mimarlık Nedir?</h5>
+                    <p>Yapıların iç mekanlarını kullanıcı ihtiyaçlarına göre optimize eden, malzeme bilgisini estetikle birleştiren ve mekanın ruhunu tasarlayan uzmanlık alanıdır. 4 yıllık eğitim sonrası "İç Mimar" unvanı alınır.</p>
+                    
+                    <h5 class="mt-4 fw-bold">Teknik Yetkinlikler</h5>
+                    <div class="mt-2">
+                        <span class="skill-badge">SketchUp & V-Ray</span>
+                        <span class="skill-badge">Mobilya Detay Çözümleri</span>
+                        <span class="skill-badge">Malzeme & Doku Bilgisi</span>
+                        <span class="skill-badge">Aydınlatma Tasarımı</span>
+                        <span class="skill-badge">Mekan Psikolojisi</span>
+                    </div>
+
+                    <h5 class="mt-4 fw-bold">Çalışma Alanları</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent">🛋️ <strong>İç Mimarlık Ofisleri:</strong> Konut, ofis, otel veya mağaza iç mekan tasarımları ve uygulama takibi.</li>
+                        <li class="list-group-item bg-transparent">🪑 <strong>Mobilya Endüstrisi:</strong> Ürün tasarımı, koleksiyon hazırlama ve üretim detaylandırma.</li>
+                        <li class="list-group-item bg-transparent">🎭 <strong>Sahne & Stand Tasarımı:</strong> Fuar standları, TV setleri veya sahne dekorları tasarlama.</li>
+                        <li class="list-group-item bg-transparent">🖼️ <strong>Görselleştirme Uzmanlığı:</strong> Mimari projeler için yüksek kaliteli 3D render ve animasyon üretimi.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-custom p-4 text-center">
+                <h6 class="fw-bold text-muted mb-4 text-uppercase" style="letter-spacing: 1px;">İç Mimarlık Kazanç Analizi</h6>
+                <div class="chart-container">
+                    <canvas id="maasGrafigi"></canvas>
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded-4">
+                    <small class="text-muted fw-bold">NET KAZANÇ TAHMİNİ</small>
+                    <div id="secilenMaas" class="display-6 fw-bold text-warning my-1" style="font-size: 1.8rem; color: #d97706 !important;">Sektör Seçin</div>
+                    <p id="secilenBilgi" class="small text-muted mb-0">Uygulama payı, proje bedeli ve tecrübeye göre verilerdir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('maasGrafigi').getContext('2d');
+    const veriler = {
+        labels: ['Junior İç Mimar', 'Mağaza/Mobilya Sekt.', 'Freelance (Render)', 'Kıdemli Tasarımcı', 'Kendi Ofisi (Ort.)'],
+        datasets: [{
+            data: [33000, 48000, 65000, 78000, 120000], 
+            aciklamalar: [
+                'Yeni mezun, bir ofis bünyesinde çalışan iç mimar başlangıcı.',
+                'Mobilya markaları veya mağaza zincirlerinde tasarım/satış uzmanlığı.',
+                'Proje başı görselleştirme ve render işleri yapan uzman geliri.',
+                'Büyük projeleri yöneten, uygulama tecrübesi yüksek uzman maaşı.',
+                'Müşteri portföyü olan ve anahtar teslim iş yapan iç mimar net kârı.'
+            ],
+            backgroundColor: ['#fef3c7', '#fde68a', '#fbbf24', '#f59e0b', '#d97706'],
+            borderRadius: 10
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: veriler,
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    document.getElementById('secilenMaas').innerText = veriler.datasets[0].data[idx].toLocaleString('tr-TR') + " TL+";
+                    document.getElementById('secilenBilgi').innerHTML = `<b>${veriler.labels[idx]}:</b> ${veriler.datasets[0].aciklamalar[idx]}`;
+                }
+            },
+            scales: {
+                x: { display: false },
+                y: { grid: { display: false }, ticks: { font: { weight: 'bold' } } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

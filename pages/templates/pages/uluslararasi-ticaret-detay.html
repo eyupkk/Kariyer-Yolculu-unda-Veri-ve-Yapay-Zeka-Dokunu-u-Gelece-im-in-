@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uluslararası Ticaret Rehberi | Geleceğim İçin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        .navbar-custom { background-color: #1f2529; padding: 0.5rem 0; border: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; }
+        .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); background: #fff; }
+        .text-primary-custom { color: #495057; } /* Kurumsal Gri Tonu */
+        .chart-container { position: relative; height: 320px; width: 100%; }
+        .skill-badge { background: #e9ecef; color: #343a40; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0 5px 10px 0; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-0">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'pages/img/logo.png' %}" alt="Logo" width="110" height="100" class="me-4 mt-n2 mb-n2">
+        <span class="ms-2">Geleceğim İçin</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'meslekler' %}">Meslekler</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Şehirler</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card card-custom p-4">
+                <h1 class="fw-bold text-primary-custom mb-3">Uluslararası Ticaret</h1>
+                <p class="lead text-muted small">Sınırları aşan ticaretin stratejik yönetimi ve global piyasa entegrasyonu.</p>
+                <hr>
+                <div class="pro-text mt-4">
+                    <h5 class="fw-bold">Uluslararası Ticaret Nedir?</h5>
+                    <p>Mal ve hizmetlerin ülkeler arası değişimini; yasal, finansal ve operasyonel boyutlarıyla yöneten disiplindir. Sadece ürün satmak değil, global rekabet stratejileri geliştirmek ve dünya pazarlarını analiz etmektir.</p>
+                    
+                    <h5 class="mt-4 fw-bold">Mesleki Yetkinlikler</h5>
+                    <div class="mt-2">
+                        <span class="skill-badge">Dış Ticaret Mevzuatı</span>
+                        <span class="skill-badge">İnkoterm (Teslim Şekilleri)</span>
+                        <span class="skill-badge">Akreditif & Ödeme Yöntemleri</span>
+                        <span class="skill-badge">Global Pazarlama</span>
+                        <span class="skill-badge">Lojistik Operasyonları</span>
+                    </div>
+
+                    <h5 class="mt-4 fw-bold">Çalışma Alanları</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent">🌍 <strong>İhracat & İthalat Ofisleri:</strong> Şirketlerin yurt dışı pazarlara açılması ve operasyon takibi.</li>
+                        <li class="list-group-item bg-transparent">🏦 <strong>Dış Ticaret Finansmanı:</strong> Bankalarda ihracat kredileri ve uluslararası ödeme sistemleri yönetimi.</li>
+                        <li class="list-group-item bg-transparent">🚢 <strong>Gümrük ve Lojistik:</strong> Ürünlerin sınır geçiş süreçleri ve gümrük müşavirliği hizmetleri.</li>
+                        <li class="list-group-item bg-transparent">📈 <strong>Pazar Araştırma Şirketleri:</strong> Global trendlerin analizi ve yeni pazar giriş stratejileri üretme.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-custom p-4 text-center">
+                <h6 class="fw-bold text-muted mb-4 text-uppercase" style="letter-spacing: 1px;">Uluslararası Ticaret Kazanç Analizi</h6>
+                <div class="chart-container">
+                    <canvas id="maasGrafigi"></canvas>
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded-4">
+                    <small class="text-muted fw-bold">NET KAZANÇ TAHMİNİ</small>
+                    <div id="secilenMaas" class="display-6 fw-bold text-secondary my-1" style="font-size: 1.8rem; color: #495057 !important;">Sektör Seçin</div>
+                    <p id="secilenBilgi" class="small text-muted mb-0">Dil yetkinliği, bölge uzmanlığı ve primlere göre verilerdir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('maasGrafigi').getContext('2d');
+    const veriler = {
+        labels: ['İhracat Op. Yrd.', 'Dış Ticaret Uzmanı', 'Gümrük Müşavir Yrd.', 'İhracat Müdürü', 'Global Ülke Müdürü'],
+        datasets: [{
+            data: [35000, 52000, 48000, 85000, 145000], 
+            aciklamalar: [
+                'Dosya takibi ve operasyon süreçlerinde başlangıç seviyesi maaş.',
+                'Yurt dışı pazar ve müşteri yönetimi yapan uzman kazancı.',
+                'Gümrük müşavirliği bürolarında belge ve süreç yöneten uzman geliri.',
+                'Şirketin tüm ihracat departmanını ve hedeflerini yöneten müdür maaşı.',
+                'Büyük holdinglerin yurt dışı ofislerini yöneten üst düzey kazanç.'
+            ],
+            backgroundColor: ['#dee2e6', '#ced4da', '#adb5bd', '#6c757d', '#495057'],
+            borderRadius: 10
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: veriler,
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    document.getElementById('secilenMaas').innerText = veriler.datasets[0].data[idx].toLocaleString('tr-TR') + " TL+";
+                    document.getElementById('secilenBilgi').innerHTML = `<b>${veriler.labels[idx]}:</b> ${veriler.datasets[0].aciklamalar[idx]}`;
+                }
+            },
+            scales: {
+                x: { display: false },
+                y: { grid: { display: false }, ticks: { font: { weight: 'bold' } } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

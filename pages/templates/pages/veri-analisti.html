@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veri Analisti Rehberi | Geleceğim İçin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        .hero-section { background: #035bb3; padding: 100px 0; border-bottom: 1px solid #dee2e6; }
+    .navbar-brand img {
+    padding: 2px;
+}
+.hero-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 120px 0;
+}
+
+.display-3 {
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    padding: 15px 35px;
+    transition: transform 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+}
+
+.img-fluid {
+
+    filter: saturate(1.1);
+    border: 8px solid white;
+}
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-0">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'pages/img/logo.png' %}" alt="Logo" width="110" height="100" class="me-4 mt-n2 mb-n2">
+        Geleceğim İçin
+    </a>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'meslekler' %}">Meslekler</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Şehirler</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card card-custom p-4">
+                <h1 class="fw-bold text-primary-custom mb-3">Veri Analisti (Data Analyst)</h1>
+                <p class="lead text-muted small">Ham veriyi stratejik kararlara ve görsel hikayelere dönüştüren uzman.</p>
+                <hr>
+                <div class="pro-text mt-4">
+                    <h5 class="fw-bold">Veri Analisti Nedir?</h5>
+                    <p>İşletmelerin topladığı verileri istatistiksel yöntemlerle inceleyen, temizleyen ve bu verilerden iş süreçlerini iyileştirecek anlamlı sonuçlar çıkaran kişidir. Veri okuryazarlığı ile teknik beceriyi harmanlar.</p>
+                    
+                    <h5 class="mt-4 fw-bold">Teknik Araçlar ve Skiller</h5>
+                    <div class="mt-2">
+                        <span class="skill-badge">SQL (PostgreSQL/BigQuery)</span>
+                        <span class="skill-badge">Python (Pandas & Seaborn)</span>
+                        <span class="skill-badge">Power BI / Tableau</span>
+                        <span class="skill-badge">Excel (VBA & Pivot)</span>
+                        <span class="skill-badge">İstatistiksel Testler</span>
+                    </div>
+
+                    <h5 class="mt-4 fw-bold">Neler Yaparsın?</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent">🧹 <strong>Veri Temizleme:</strong> Hatalı veya eksik verileri analize hazır hale getirme.</li>
+                        <li class="list-group-item bg-transparent">📊 <strong>Görselleştirme:</strong> Karmaşık verileri anlaşılır dashboardlar ile sunma.</li>
+                        <li class="list-group-item bg-transparent">📈 <strong>A/B Testleri:</strong> Ürün değişikliklerinin kullanıcı üzerindeki etkisini ölçme.</li>
+                        <li class="list-group-item bg-transparent">🔎 <strong>Tahminleme:</strong> Geçmiş verileri kullanarak gelecek trendlerini raporlama.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-custom p-4 text-center">
+                <h6 class="fw-bold text-muted mb-4 text-uppercase" style="letter-spacing: 1px;">Veri Analisti Maaş Analizi</h6>
+                <div class="chart-container">
+                    <canvas id="maasGrafigi"></canvas>
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded-4">
+                    <small class="text-muted fw-bold">NET KAZANÇ TAHMİNİ</small>
+                    <div id="secilenMaas" class="display-6 fw-bold text-success my-1" style="font-size: 1.8rem;">Alan Seçin</div>
+                    <p id="secilenBilgi" class="small text-muted mb-0">Tecrübe ve sektörel birime göre tahmini veridir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('maasGrafigi').getContext('2d');
+    const veriler = {
+        labels: ['Junior Analist', 'E-Ticaret (Trendyol vb.)', 'Bankacılık & Finans', 'SaaS (Yazılım)', 'Global Remote (Euro/$)'],
+        datasets: [{
+            data: [58000, 75000, 88000, 82000, 125000], 
+            aciklamalar: [
+                'Veri dünyasına yeni giriş yapan başlangıç maaşı.',
+                'Hızlı tüketim ve kullanıcı verisi yoğunluklu sektör.',
+                'Kritik finansal verilerin analizi ve risk yönetimi.',
+                'Abonelik tabanlı yazılım firmalarında veri takibi.',
+                'Yurt dışı menşeli firmalar için uzaktan çalışma kazancı.'
+            ],
+            backgroundColor: ['#a5f3fc', '#22d3ee', '#0891b2', '#0e7490', '#155e75'],
+            borderRadius: 10
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: veriler,
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    document.getElementById('secilenMaas').innerText = veriler.datasets[0].data[idx].toLocaleString('tr-TR') + " TL+";
+                    document.getElementById('secilenBilgi').innerHTML = `<b>${veriler.labels[idx]}:</b> ${veriler.datasets[0].aciklamalar[idx]}`;
+                }
+            },
+            scales: {
+                x: { display: false },
+                y: { grid: { display: false }, ticks: { font: { weight: 'bold' } } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

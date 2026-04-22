@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafik Tasarım Rehberi | Geleceğim İçin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        .navbar-custom { background-color: #1f2529; padding: 0.5rem 0; border: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; }
+        .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); background: #fff; }
+        .text-primary-custom { color: #d97706; } /* Tasarım Grubu Sarı Tonu */
+        .chart-container { position: relative; height: 320px; width: 100%; }
+        .skill-badge { background: #fffbeb; color: #92400e; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0 5px 10px 0; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-0">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'pages/img/logo.png' %}" alt="Logo" width="110" height="100" class="me-4 mt-n2 mb-n2">
+        <span class="ms-2">Geleceğim İçin</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'meslekler' %}">Meslekler</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Şehirler</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card card-custom p-4">
+                <h1 class="fw-bold text-primary-custom mb-3">Grafik Tasarım</h1>
+                <p class="lead text-muted small">Mesajları görsel bir dille anlatan, dijital ve basılı dünyayı şekillendiren yaratıcı disiplin.</p>
+                <hr>
+                <div class="pro-text mt-4">
+                    <h5 class="fw-bold">Grafik Tasarım Nedir?</h5>
+                    <p>Bir fikri veya mesajı hedef kitleye ulaştırmak amacıyla metin ve görsellerin sanatsal bir dengeyle bir araya getirilmesidir. Günümüzde sadece kağıt üzerinde değil, mobil uygulamalardan oyun dünyasına kadar her yerde karşımıza çıkar.</p>
+                    
+                    <h5 class="mt-4 fw-bold">Teknik Araç Seti</h5>
+                    <div class="mt-2">
+                        <span class="skill-badge">Adobe Photoshop & Illustrator</span>
+                        <span class="skill-badge">Figma (UI/UX)</span>
+                        <span class="skill-badge">After Effects (Motion)</span>
+                        <span class="skill-badge">Tipografi & Renk Teorisi</span>
+                        <span class="skill-badge">Yapay Zeka Destekli Tasarım</span>
+                    </div>
+
+                    <h5 class="mt-4 fw-bold">Çalışma Alanları</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent">📣 <strong>Reklam Ajansları:</strong> Marka yönetimi, sosyal medya içerikleri ve kampanya tasarımları.</li>
+                        <li class="list-group-item bg-transparent">📱 <strong>UI/UX Tasarımı:</strong> Web siteleri ve mobil uygulamaların kullanıcı arayüzü ve deneyimi süreci.</li>
+                        <li class="list-group-item bg-transparent">🎬 <strong>Hareketli Grafikler:</strong> Videolarda kullanılan animasyonlar ve jenerik tasarımları.</li>
+                        <li class="list-group-item bg-transparent">🌍 <strong>Freelance (Global):</strong> Dünya genelindeki müşterilere proje bazlı tasarım desteği sunma.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-custom p-4 text-center">
+                <h6 class="fw-bold text-muted mb-4 text-uppercase" style="letter-spacing: 1px;">Grafik Tasarım Kazanç Analizi</h6>
+                <div class="chart-container">
+                    <canvas id="maasGrafigi"></canvas>
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded-4">
+                    <small class="text-muted fw-bold">NET KAZANÇ TAHMİNİ</small>
+                    <div id="secilenMaas" class="display-6 fw-bold text-warning my-1" style="font-size: 1.8rem; color: #d97706 !important;">Sektör Seçin</div>
+                    <p id="secilenBilgi" class="small text-muted mb-0">Portfolyo kalitesi, uzmanlık alanı ve lokasyona göre verilerdir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('maasGrafigi').getContext('2d');
+    const veriler = {
+        labels: ['Junior Tasarımcı', 'Reklam Ajansı (Ort)', 'UI/UX Uzmanı', 'Art Director', 'Global Freelance'],
+        datasets: [{
+            data: [32000, 45000, 68000, 95000, 140000], 
+            aciklamalar: [
+                'Yeni mezun, temel tasarım işlerini yürüten junior maaşı.',
+                'Standart reklam ajanslarında çalışan uzman tasarımcı geliri.',
+                'Dijital ürün tasarımı (Arayüz) alanında uzmanlaşmış tasarımcı maaşı.',
+                'Yaratıcı ekibi yöneten ve konsept belirleyen sanat yönetmeni maaşı.',
+                'Döviz bazlı çalışan, yüksek portfolyo kalitesine sahip tasarımcı kazancı.'
+            ],
+            backgroundColor: ['#fef3c7', '#fde68a', '#fbbf24', '#f59e0b', '#d97706'],
+            borderRadius: 10
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: veriler,
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const idx = elements[0].index;
+                    document.getElementById('secilenMaas').innerText = veriler.datasets[0].data[idx].toLocaleString('tr-TR') + " TL+";
+                    document.getElementById('secilenBilgi').innerHTML = `<b>${veriler.labels[idx]}:</b> ${veriler.datasets[0].aciklamalar[idx]}`;
+                }
+            },
+            scales: {
+                x: { display: false },
+                y: { grid: { display: false }, ticks: { font: { weight: 'bold' } } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
